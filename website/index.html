@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>House Price Prediction</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f172a, #2563eb);
+            color: white;
+            padding: 40px 20px;
+        }
+
+        .main {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .icon {
+            font-size: 55px;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #dbeafe;
+            font-size: 17px;
+        }
+
+        .card {
+            background: white;
+            color: #0f172a;
+            max-width: 650px;
+            margin: auto;
+            padding: 35px;
+            border-radius: 25px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        .card h2 {
+            text-align: center;
+            margin-bottom: 8px;
+            font-size: 27px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 25px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .field label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        .field input {
+            width: 100%;
+            padding: 13px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .field input:focus {
+            border-color: #2563eb;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        #result {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 21px;
+            font-weight: bold;
+            padding: 15px;
+            border-radius: 12px;
+            background: #eff6ff;
+            color: #1d4ed8;
+        }
+
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 25px;
+            color: #dbeafe;
+            font-size: 14px;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 600px) {
+
+            .header h1 {
+                font-size: 30px;
+            }
+
+            .card {
+                padding: 25px 20px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full {
+                grid-column: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="main">
+
+        <div class="header">
+            <div class="icon">🏠</div>
+
+            <h1>House Price Prediction</h1>
+
+            <p>
+                Estimate your property's price using machine learning
+            </p>
+        </div>
+
+
+        <div class="card">
+
+            <h2>Enter Property Details</h2>
+
+            <p class="subtitle">
+                Fill in the details below to get an estimated price
+            </p>
+
+
+            <div class="form-grid">
+
+                <div class="field">
+                    <label>🛏️ Bedrooms</label>
+
+                    <input
+                        type="number"
+                        id="bedrooms"
+                        placeholder="e.g. 3"
+                    >
+                </div>
+
+
+                <div class="field">
+                    <label>🛁 Bathrooms</label>
+
+                    <input
+                        type="number"
+                        id="bathrooms"
+                        step="0.5"
+                        placeholder="e.g. 2"
+                    >
+                </div>
+
+
+                <div class="field">
+                    <label>📐 Living Area</label>
+
+                    <input
+                        type="number"
+                        id="living_area"
+                        placeholder="e.g. 1500"
+                    >
+                </div>
+
+
+                <div class="field">
+                    <label>🌳 Lot Area</label>
+
+                    <input
+                        type="number"
+                        id="lot_area"
+                        placeholder="e.g. 5000"
+                    >
+                </div>
+
+
+                <div class="field full">
+                    <label>🏢 Floors</label>
+
+                    <input
+                        type="number"
+                        id="floors"
+                        step="0.5"
+                        placeholder="e.g. 2"
+                    >
+                </div>
+
+            </div>
+
+
+            <button onclick="predictPrice()">
+                🔮 Predict House Price
+            </button>
+
+
+            <div id="result"></div>
+
+        </div>
+
+
+        <div class="features">
+
+            <span>🤖 Machine Learning</span>
+
+            <span>📊 Random Forest</span>
+
+            <span>⚡ Instant Prediction</span>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        async function predictPrice() {
+
+            let bedrooms =
+                document.getElementById("bedrooms").value;
+
+            let bathrooms =
+                document.getElementById("bathrooms").value;
+
+            let livingArea =
+                document.getElementById("living_area").value;
+
+            let lotArea =
+                document.getElementById("lot_area").value;
+
+            let floors =
+                document.getElementById("floors").value;
+
+
+            if (
+                !bedrooms ||
+                !bathrooms ||
+                !livingArea ||
+                !lotArea ||
+                !floors
+            ) {
+
+                document.getElementById("result").innerHTML =
+                    "⚠️ Please enter all property details.";
+
+                return;
+            }
+
+
+            document.getElementById("result").innerHTML =
+                "⏳ Predicting price...";
+
+
+            try {
+
+                const response = await fetch("/predict", {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        bedrooms: bedrooms,
+
+                        bathrooms: bathrooms,
+
+                        living_area: livingArea,
+
+                        lot_area: lotArea,
+
+                        floors: floors
+
+                    })
+
+                });
+
+
+                const data = await response.json();
+
+
+                document.getElementById("result").innerHTML =
+                    "🏠 Predicted Price: ₹" +
+                    data.price.toLocaleString("en-IN");
+
+
+            } catch (error) {
+
+                document.getElementById("result").innerHTML =
+                    "❌ Something went wrong.";
+
+            }
+
+        }
+
+    </script>
+
+</body>
+</html>
