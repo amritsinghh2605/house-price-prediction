@@ -98,25 +98,29 @@ bedrooms = st.number_input(
 bathrooms = st.number_input(
     "🛁 Number of Bathrooms",
     min_value=0.0,
-    value=2.0
+    value=2.0,
+    step=1.0
 )
 
 living_area = st.number_input(
     "🏠 Living Area (sq ft)",
     min_value=0.0,
-    value=2000.0
+    value=2000.0,
+    step=1.0
 )
 
 lot_area = st.number_input(
     "📐 Lot Area (sq ft)",
     min_value=0.0,
-    value=5000.0
+    value=5000.0,
+    step=1.0
 )
 
 floors = st.number_input(
     "🏢 Number of Floors",
     min_value=0.0,
-    value=1.0
+    value=1.0,
+    step=1.0
 )
 
 st.markdown("</div>", unsafe_allow_html=True)
@@ -124,7 +128,7 @@ st.markdown("</div>", unsafe_allow_html=True)
 # ---------- PREDICTION ----------
 if st.button(" Predict House Price"):
 
-    st.write("Button clicked!")
+   
 
     try:
         house = pd.DataFrame({
